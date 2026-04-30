@@ -17,8 +17,6 @@ let currentIndex = 0;
 let trolleyCount = 0;
 let selectedPriceIndex = null;
 let phase = "select";
-let tapLock = false;
-let touchTriggeredAt = 0;
 
 const screenIntro = document.getElementById("screen-intro");
 const screenHow = document.getElementById("screen-how");
@@ -46,9 +44,7 @@ const shareTrolleyCountImageEl = document.getElementById("share-trolley-count-im
 const imageCache = new Set();
 
 function showScreen(screen) {
-  [screenIntro, screenHow, screenRound, screenShare].forEach(section => {
-    section.classList.add("hidden");
-  });
+  [screenIntro, screenHow, screenRound, screenShare].forEach(s => s.classList.add("hidden"));
   screen.classList.remove("hidden");
 }
 
@@ -60,12 +56,11 @@ function setDates() {
 
 function parseBatch(text) {
   const blocks = text.split(/ITEM\s*/).map(block => block.trim()).filter(Boolean);
-
   return blocks.map(block => {
-    const name = (block.match(/NAME:\s*(.+)/) || [, ""])[1].trim();
-    const store = (block.match(/STORE:\s*(.+)/) || [, ""])[1].trim();
-    const price = parseFloat((block.match(/PRICE:\s*([\d.]+)/) || [, "0"])[1]);
-    const image = (block.match(/IMAGE:\s*(.+)/) || [, ""])[1].trim();
+    const name  = (block.match(/NAME:\s*(.+)/)  || [,""])[1].trim();
+    const store = (block.match(/STORE:\s*(.+)/) || [,""])[1].trim();
+    const price = parseFloat((block.match(/PRICE:\s*([\d.]+)/) || [,"0"])[1]);
+    const image = (block.match(/IMAGE:\s*(.+)/) || [,""])[1].trim();
     return { name, store, price, image };
   });
 }
@@ -77,10 +72,7 @@ function selectTodaysProducts() {
 }
 
 function buildPricePool() {
-  pricePool = FIXED_PRICE_POOL.map(value => ({
-    value,
-    usedCorrectly: false
-  }));
+  pricePool = FIXED_PRICE_POOL.map(value => ({ value, usedCorrectly: false }));
 }
 
 function preloadImage(src) {
@@ -110,11 +102,7 @@ function updateTrolleyImage(el, count) {
 function setRoundButtonState() {
   if (phase === "select") {
     btnRoundAction.textContent = "ENTER";
-    if (selectedPriceIndex === null) {
-      btnRoundAction.classList.add("is-disabled");
-    } else {
-      btnRoundAction.classList.remove("is-disabled");
-    }
+    btnRoundAction.classList.toggle("is-disabled", selectedPriceIndex === null);
   } else {
     btnRoundAction.textContent = "NEXT";
     btnRoundAction.classList.remove("is-disabled");
@@ -133,14 +121,12 @@ function resetRoundState() {
 
 function renderPriceGrid() {
   priceGridEl.innerHTML = "";
-
   pricePool.forEach((entry, index) => {
     const slot = document.createElement("div");
     slot.className = "price-slot";
 
     if (entry.usedCorrectly) {
       slot.classList.add("price-slot--empty");
-      slot.textContent = "$0.00";
       priceGridEl.appendChild(slot);
       return;
     }
@@ -150,7 +136,6 @@ function renderPriceGrid() {
     button.className = "price-button";
     button.dataset.index = String(index);
     button.textContent = `$${entry.value.toFixed(2)}`;
-
     if (selectedPriceIndex === index && phase === "select") {
       button.classList.add("is-selected");
     }
@@ -170,12 +155,7 @@ function renderRound() {
   productImageEl.alt = product.name;
   productNameEl.textContent = product.name;
   productStoreEl.textContent = product.store;
-
-  if (product.name.toLowerCase().includes("cadbury chomp")) {
-    specialBadgeEl.classList.remove("hidden");
-  } else {
-    specialBadgeEl.classList.add("hidden");
-  }
+  specialBadgeEl.classList.toggle("hidden", !product.name.toLowerCase().includes("cadbury chomp"));
 
   updateTrolleyImage(trolleyCountImageEl, trolleyCount);
   renderPriceGrid();
@@ -216,12 +196,10 @@ function scoreCurrentRound() {
 
 function goToNextRound() {
   currentIndex += 1;
-
   if (currentIndex >= todaysProducts.length) {
     showSummary();
     return;
   }
-
   renderRound();
 }
 
@@ -232,110 +210,13 @@ function showSummary() {
 
 function shareResult() {
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
-
   if (navigator.share) {
     navigator.share({ text }).catch(() => {});
     return;
   }
-
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch(() => {});
   }
-}
-
-function lockTap() {
-  tapLock = true;
-  setTimeout(() => {
-    tapLock = false;
-  }, 120);
-}
-
-function shouldIgnoreSyntheticClick() {
-  return Date.now() - touchTriggeredAt < 350;
-}
-
-function bindTap(element, handler) {
-  element.addEventListener(
-    "touchend",
-    event => {
-      event.preventDefault();
-      if (tapLock) return;
-      touchTriggeredAt = Date.now();
-      lockTap();
-      handler(event);
-    },
-    { passive: false }
-  );
-
-  element.addEventListener("click", event => {
-    if (shouldIgnoreSyntheticClick()) {
-      event.preventDefault();
-      return;
-    }
-    if (tapLock) return;
-    lockTap();
-    handler(event);
-  });
-}
-
-function bindDelegatedTap(parent, selector, handler) {
-  parent.addEventListener(
-    "touchend",
-    event => {
-      const target = event.target.closest(selector);
-      if (!target) return;
-      event.preventDefault();
-      if (tapLock) return;
-      touchTriggeredAt = Date.now();
-      lockTap();
-      handler(event, target);
-    },
-    { passive: false }
-  );
-
-  parent.addEventListener("click", event => {
-    const target = event.target.closest(selector);
-    if (!target) return;
-    if (shouldIgnoreSyntheticClick()) {
-      event.preventDefault();
-      return;
-    }
-    if (tapLock) return;
-    lockTap();
-    handler(event, target);
-  });
-}
-
-function onPlay() {
-  showScreen(screenHow);
-}
-
-function onHowStart() {
-  currentIndex = 0;
-  trolleyCount = 0;
-  buildPricePool();
-  renderRound();
-  showScreen(screenRound);
-}
-
-function onPriceTap(event, button) {
-  const index = Number(button.dataset.index);
-  selectPrice(index);
-}
-
-function onRoundAction() {
-  if (btnRoundAction.classList.contains("is-disabled")) return;
-
-  if (phase === "select") {
-    scoreCurrentRound();
-    return;
-  }
-
-  goToNextRound();
-}
-
-function onShare() {
-  shareResult();
 }
 
 async function init() {
@@ -349,11 +230,32 @@ async function init() {
   buildPricePool();
   preloadRoundImages();
 
-  bindTap(btnPlay, onPlay);
-  bindTap(btnHowStart, onHowStart);
-  bindTap(btnRoundAction, onRoundAction);
-  bindTap(btnShare, onShare);
-  bindDelegatedTap(priceGridEl, ".price-button", onPriceTap);
+  btnPlay.addEventListener("click", () => showScreen(screenHow));
+
+  btnHowStart.addEventListener("click", () => {
+    currentIndex = 0;
+    trolleyCount = 0;
+    buildPricePool();
+    renderRound();
+    showScreen(screenRound);
+  });
+
+  btnRoundAction.addEventListener("click", () => {
+    if (btnRoundAction.classList.contains("is-disabled")) return;
+    if (phase === "select") {
+      scoreCurrentRound();
+    } else {
+      goToNextRound();
+    }
+  });
+
+  btnShare.addEventListener("click", shareResult);
+
+  priceGridEl.addEventListener("click", event => {
+    const button = event.target.closest(".price-button");
+    if (!button) return;
+    selectPrice(Number(button.dataset.index));
+  });
 
   showScreen(screenIntro);
 }
