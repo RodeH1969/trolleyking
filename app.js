@@ -110,10 +110,14 @@ function updateTrolleyImage(el, count) {
 function setRoundButtonState() {
   if (phase === "select") {
     btnRoundAction.textContent = "ENTER";
-    btnRoundAction.disabled = selectedPriceIndex === null;
+    if (selectedPriceIndex === null) {
+      btnRoundAction.classList.add("is-disabled");
+    } else {
+      btnRoundAction.classList.remove("is-disabled");
+    }
   } else {
     btnRoundAction.textContent = "NEXT";
-    btnRoundAction.disabled = false;
+    btnRoundAction.classList.remove("is-disabled");
   }
 }
 
@@ -186,7 +190,7 @@ function selectPrice(index) {
 }
 
 function scoreCurrentRound() {
-   if (selectedPriceIndex === null) return;
+  if (selectedPriceIndex === null) return;
 
   const product = todaysProducts[currentIndex];
   const selected = pricePool[selectedPriceIndex];
@@ -320,7 +324,7 @@ function onPriceTap(event, button) {
 }
 
 function onRoundAction() {
-  if (btnRoundAction.disabled) return;
+  if (btnRoundAction.classList.contains("is-disabled")) return;
 
   if (phase === "select") {
     scoreCurrentRound();

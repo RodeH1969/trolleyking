@@ -326,7 +326,7 @@ body {
   cursor: pointer;
 }
 
-.action-button:disabled {
+.action-button.is-disabled {
   opacity: 0.45;
   background: var(--disabled);
   cursor: default;
