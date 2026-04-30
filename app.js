@@ -186,8 +186,7 @@ function selectPrice(index) {
 }
 
 function scoreCurrentRound() {
-    touchTriggeredAt = 0;
-if (selectedPriceIndex === null) return;
+   if (selectedPriceIndex === null) return;
 
   const product = todaysProducts[currentIndex];
   const selected = pricePool[selectedPriceIndex];
