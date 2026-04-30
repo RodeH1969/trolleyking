@@ -4,41 +4,39 @@ Mobile-first daily price guessing game.
 
 ## Flow
 
-1. Intro screen
-2. How to play screen
+1. Intro
+2. How to play
 3. 5 product rounds
-4. Share screen
+4. Share
 
-## Rules
+## Round logic
 
 - Tap one of the 9 fixed prices.
-- Your selected price appears in the answer box.
+- The chosen price appears in the answer box.
 - Press ENTER.
 - If correct:
-  - the tick appears,
-  - trolley count increases,
-  - that price slot becomes blank for the rest of the game.
+  - tick appears,
+  - trolley number image updates,
+  - that price slot becomes blank.
 - If incorrect:
-  - the cross appears,
-  - trolley count stays the same,
-  - the price remains available.
+  - cross appears,
+  - trolley number does not increase,
+  - price stays.
 - Press NEXT to continue.
 
 ## Local run
-
-Use a local server so `fetch()` can read `data/batch-1.txt`.
 
 ```bash
 cd C:\Users\User\Desktop\TrolleyKing
 python -m http.server 8000
 ```
 
-Then open:
+Open:
 
-- On desktop: `http://localhost:8000/`
-- On iPhone on same Wi-Fi: `http://YOUR_PC_IP:8000/`
+- Desktop: `http://localhost:8000/`
+- iPhone on same Wi-Fi: `http://YOUR_PC_IP:8000/`
 
-## Assets expected
+## Required assets
 
 ### Root
 - `index.html`
@@ -51,9 +49,14 @@ Then open:
 - `tick.png`
 - `cross.png`
 - `Special.png`
+- `1.png`
+- `2.png`
+- `3.png`
+- `4.png`
+- `5.png`
 
 ### assets/products
-- product PNG files matching paths in `data/batch-1.txt`
+- product PNGs used by `data/batch-1.txt`
 
 ### data
 - `batch-1.txt`

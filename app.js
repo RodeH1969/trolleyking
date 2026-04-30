@@ -41,8 +41,8 @@ const specialBadgeEl = document.getElementById("special-badge");
 
 const priceStripEl = document.getElementById("price-strip");
 
-const trolleyCountEl = document.getElementById("trolley-count");
-const shareTrolleyCountEl = document.getElementById("share-trolley-count");
+const trolleyCountImageEl = document.getElementById("trolley-count-image");
+const shareTrolleyCountImageEl = document.getElementById("share-trolley-count-image");
 
 function showScreen(screen) {
   [screenIntro, screenHow, screenRound, screenShare].forEach(s => s.classList.add("hidden"));
@@ -79,6 +79,18 @@ function buildPricePool() {
     value,
     usedCorrectly: false
   }));
+}
+
+function updateTrolleyImage(el, count) {
+  if (count >= 1 && count <= 5) {
+    el.src = `./assets/${count}.png`;
+    el.alt = String(count);
+    el.classList.remove("hidden");
+  } else {
+    el.src = "";
+    el.alt = "";
+    el.classList.add("hidden");
+  }
 }
 
 function resetRoundState() {
@@ -137,7 +149,7 @@ function renderRound() {
     specialBadgeEl.classList.add("hidden");
   }
 
-  trolleyCountEl.textContent = String(trolleyCount);
+  updateTrolleyImage(trolleyCountImageEl, trolleyCount);
   renderPriceStrip();
 }
 
@@ -162,7 +174,7 @@ function handleRoundAction() {
 
     if (isCorrect) {
       trolleyCount += 1;
-      trolleyCountEl.textContent = String(trolleyCount);
+      updateTrolleyImage(trolleyCountImageEl, trolleyCount);
       pricePool[selectedPriceIndex].usedCorrectly = true;
       answerIconEl.src = "./assets/tick.png";
       answerIconEl.alt = "Correct";
@@ -191,7 +203,7 @@ function handleRoundAction() {
 }
 
 function showSummary() {
-  shareTrolleyCountEl.textContent = String(trolleyCount);
+  updateTrolleyImage(shareTrolleyCountImageEl, trolleyCount);
   showScreen(screenShare);
 }
 
