@@ -1,0 +1,155 @@
+ITEM
+NAME: La Gina Extra Virgin Olive Oil 1L 
+STORE: Woolworths
+PRICE: 26.00
+IMAGE: ./assets/products/La Gina Extra Virgin Olive Oil 1L.png
+
+ITEM
+NAME: Trimat Advanced Laundry Powder 5kg 
+STORE: Aldi
+PRICE: 24.99
+IMAGE: ./assets/products/Trimat Advanced Laundry Powder 5kg.png
+
+ITEM
+NAME: Fresh Tasmanian Salmon Fillets Skin On 4 Pack 460g 
+STORE: Aldi
+PRICE: 15.99
+IMAGE: ./assets/products/Fishmonger Tasmanian Salmon Fillets Skin On 4 Pack 460g.png
+
+ITEM
+NAME: Raid Max Pest Multi Insect Killer Spring Meadow 300g 
+STORE: Coles
+PRICE: 13.00
+IMAGE: ./assets/products/Raid Max Pest Multi Insect Killer Spring Meadow 300g.png
+
+ITEM
+NAME: Byron Bay Chilli Co. Jalapeno Sauce 250g
+STORE: Woolworths
+PRICE: 5.00
+IMAGE: ./assets/products/Byron Bay Chilli Co. Jalapeno Sauce 250g.png
+
+ITEM
+NAME: Libra Super Tampons 32 pack 
+STORE: Coles
+PRICE: 9.00
+IMAGE: ./assets/products/Libra Super Tampons 32 pack.png
+
+ITEM
+NAME: Duracell Coppertop AA Alkaline Batteries 16 Pack 
+STORE: Coles
+PRICE: 28.00
+IMAGE: ./assets/products/Duracell Coppertop AA Alkaline Batteries 16 Pack.png
+
+ITEM
+NAME: Vegemite 560g
+STORE: Woolworths
+PRICE: 9.90
+IMAGE: ./assets/products/Vegemite-560g.png
+
+ITEM
+NAME: Urban Eats Pork Dumplings 750g
+STORE: Aldi
+PRICE: 8.99
+IMAGE: ./assets/products/Urban-eats-pork-dumplings-750g.png
+
+ITEM
+NAME: Grand Padano 250g
+STORE: Aldi
+PRICE: 8.29
+IMAGE: ./assets/products/Grand-padano-250g.png
+
+ITEM
+NAME: A2 Full Cream Milk 2L
+STORE: Coles
+PRICE: 6.90
+IMAGE: ./assets/products/a2-full-cream-milk-2l.png
+
+ITEM
+NAME: Red Rock Deli Potato Chips 165g
+STORE: Woolworths
+PRICE: 6.00
+IMAGE: ./assets/products/Red-rock-deli-potato-chips-165g.png
+
+ITEM
+NAME: Choco Pillows 500g
+STORE: Aldi
+PRICE: 4.69
+IMAGE: ./assets/products/Choco-pillows-500g.png
+
+ITEM
+NAME: Cadbury Chomp bar 30g
+STORE: Coles
+PRICE: 1.00
+IMAGE: ./assets/products/Cadbury-chomp-bar-30g.png
+
+ITEM
+NAME: Hydale Beef Jerky Original 50g 
+STORE: Aldi
+PRICE: 3.99
+IMAGE: ./assets/products/Hydale Beef Jerky Original 50g.png
+
+ITEM
+NAME: Nivea Deo Aero Female Pearl And Beauty 250mL 
+STORE: Coles
+PRICE: 10.50
+IMAGE: ./assets/products/Nivea Deo Aero Female Pearl And Beauty 250mL.png
+
+ITEM
+NAME: Nescafe Gold Original Soluble Instant Coffee Jar 100g
+STORE: Woolworths
+PRICE: 14.50
+IMAGE: ./assets/products/Nescafe Gold Original Soluble Instant Coffee Jar 100g.png
+
+ITEM
+NAME: Durex Original Regular Fit Condoms 30 pack
+STORE: Woolworths
+PRICE: 17.50
+IMAGE: ./assets/products/Durex Original Regular Fit Condoms 30 pack.png
+
+ITEM
+NAME: Peters Maxibon Original Vanilla 4 Pack 560mL 
+STORE: Coles
+PRICE: 11.50
+IMAGE: ./assets/products/Peters Maxibon Original Vanilla 4 Pack 560mL.png
+
+ITEM
+NAME: Old El Paso Quesadilla Kit 365g 
+STORE: Coles
+PRICE: 8.50
+IMAGE: ./assets/products/Old El Paso Quesadilla Kit 365g.png
+
+ITEM
+NAME: Westacre Dairy Cottage Cheese 500g 
+STORE: Aldi
+PRICE: 5.49
+IMAGE: ./assets/products/Westacre Dairy Cottage Cheese 500g.png
+
+ITEM
+NAME: International Cuisine Beef Lasagne 2kg 
+STORE: Aldi
+PRICE: 11.49
+IMAGE: ./assets/products/International Cuisine Beef Lasagne 2kg.png
+
+ITEM
+NAME: Milfina Jelli Pop 6 Pack 450ml
+STORE: Aldi
+PRICE: 4.99
+IMAGE: ./assets/products/Milfina Jelli Pop 6 Pack 450ml.png
+
+ITEM
+NAME: Specially Selected Calabrese Salami & Roasted Red Peppers Wood Fired Pizza 420g
+STORE: Aldi
+PRICE: 7.99
+IMAGE: ./assets/products/Specially Selected Calabrese Salami & Roasted Red Peppers Wood Fired Pizza 420g.png
+
+ITEM
+NAME: Finish Ultimate Dishwashing Tablets 46 Pack
+STORE: Aldi
+PRICE: 22.99
+IMAGE: ./assets/products/Finish-Ultimate-46-Pack.png
+
+ITEM
+NAME: El Tora Fajita Seasoning 40g 
+STORE: Aldi
+PRICE: 1.29
+IMAGE: ./assets/products/El Tora Fajita Seasoning 40g.png

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>TrolleyKing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <main class="tk-app">
+
+      <!-- INTRO -->
+      <section class="tk-screen tk-screen--intro" id="screen-intro">
+        <div class="tk-intro-top">
+          <img
+            src="./assets/trolleykinglogo.png"
+            alt="TrolleyKing"
+            class="tk-intro-logo"
+          >
+        </div>
+
+        <div class="tk-intro-middle">
+          <h1 class="tk-intro-title">
+            How many products<br>
+            can you fit in your<br>
+            trolley?
+          </h1>
+
+          <button id="btn-play" class="tk-play-button">Play</button>
+        </div>
+
+        <div class="tk-intro-bottom">
+          <div class="tk-date" id="intro-date">April 29, 2026</div>
+          <div class="tk-issue">No. 12</div>
+          <div class="tk-editor">Edited by Rodey Harding</div>
+        </div>
+      </section>
+
+      <!-- HOW TO PLAY -->
+      <section class="tk-screen tk-screen--how hidden" id="screen-how">
+        <div class="tk-how-content">
+          <h2 class="tk-how-title">How to play</h2>
+          <p class="tk-how-copy">
+            5 products. How many can you guess the price correctly and get in your trolley.
+          </p>
+
+          <div class="tk-how-example">
+            <div class="tk-answer-row tk-answer-row--example">
+              <div class="tk-answer-box">
+                <span class="tk-answer-text">$1.29</span>
+              </div>
+              <img
+                src="./assets/tick.png"
+                alt="Correct"
+                class="tk-answer-icon tk-answer-icon-image"
+              >
+            </div>
+
+            <div class="tk-how-product-wrap">
+              <img
+                src="./assets/products/Vegemite-560g.png"
+                alt="Vegemite Spread 560g"
+                class="tk-how-product-image"
+              >
+            </div>
+
+            <div class="tk-how-product-name">Vegemite Spread 560g</div>
+          </div>
+        </div>
+
+        <div class="tk-how-actions">
+          <button id="btn-how-start" class="tk-action-button">ENTER</button>
+        </div>
+      </section>
+
+      <!-- ROUND -->
+      <section class="tk-screen tk-screen--round hidden" id="screen-round">
+        <div class="tk-round-content">
+
+          <div class="tk-answer-row">
+            <div class="tk-answer-box">
+              <span class="tk-answer-text" id="answer-text"></span>
+            </div>
+
+            <img
+              src=""
+              alt=""
+              class="tk-answer-icon tk-answer-icon-image hidden"
+              id="answer-icon"
+            >
+          </div>
+
+          <div class="tk-product-wrap">
+            <img
+              id="product-image"
+              alt=""
+              class="tk-product-image"
+            >
+            <img
+              id="special-badge"
+              src="./assets/Special.png"
+              alt="Special"
+              class="tk-special-badge hidden"
+            >
+          </div>
+
+          <div class="tk-product-details">
+            <div class="tk-product-name" id="product-name"></div>
+            <div class="tk-product-store" id="product-store"></div>
+          </div>
+
+          <div class="tk-price-strip" id="price-strip"></div>
+        </div>
+
+        <div class="tk-bottom-bar">
+          <div class="tk-trolley-wrap">
+            <img
+              src="./assets/trolley.png"
+              alt="Trolley"
+              class="tk-trolley"
+            >
+            <div class="tk-trolley-count" id="trolley-count">0</div>
+          </div>
+
+          <button id="btn-round-action" class="tk-action-button">ENTER</button>
+        </div>
+      </section>
+
+      <!-- SHARE -->
+      <section class="tk-screen tk-screen--share hidden" id="screen-share">
+        <div class="tk-share-date" id="share-date">April 29, 2026</div>
+
+        <div class="tk-share-trolley-wrap">
+          <img
+            src="./assets/trolley.png"
+            alt="Trolley"
+            class="tk-trolley tk-trolley--share"
+          >
+          <div class="tk-trolley-count tk-trolley-count--share" id="share-trolley-count">0</div>
+        </div>
+
+        <button id="btn-share" class="tk-action-button">SHARE</button>
+      </section>
+
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: trolleyking
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
