@@ -8,98 +8,97 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <main class="tk-app">
-      <section class="tk-screen tk-screen--intro" id="screen-intro">
-        <div class="tk-intro-top">
+    <main class="app-shell">
+      <section class="screen screen--intro" id="screen-intro">
+        <div class="intro-top">
           <img
             src="./assets/trolleykinglogo.png"
             alt="TrolleyKing"
-            class="tk-intro-logo"
+            class="intro-logo"
             decoding="async"
             fetchpriority="high"
           >
         </div>
 
-        <div class="tk-intro-middle">
-          <h1 class="tk-intro-title">
+        <div class="intro-middle">
+          <h1 class="intro-title">
             How many products<br>
             can you fit in your<br>
             trolley?
           </h1>
 
-          <button id="btn-play" class="tk-play-button" type="button">Play</button>
+          <button id="btn-play" class="play-button" type="button">Play</button>
         </div>
 
-        <div class="tk-intro-bottom">
-          <div class="tk-date" id="intro-date">April 29, 2026</div>
-          <div class="tk-issue">No. 12</div>
-          <div class="tk-editor">Edited by Rodey Harding</div>
+        <div class="intro-bottom">
+          <div class="date-line" id="intro-date">April 29, 2026</div>
+          <div class="meta-line">No. 12</div>
+          <div class="meta-line">Edited by Rodey Harding</div>
         </div>
       </section>
 
-      <section class="tk-screen tk-screen--how hidden" id="screen-how">
-        <div class="tk-how-content">
-          <h2 class="tk-how-title">How to play</h2>
-          <p class="tk-how-copy">
+      <section class="screen screen--how hidden" id="screen-how">
+        <div class="how-top">
+          <h2 class="how-title">How to play</h2>
+          <p class="how-copy">
             5 products. How many can you guess the price correctly and get in your trolley.
           </p>
-
-          <div class="tk-how-example">
-            <div class="tk-answer-row">
-              <div class="tk-answer-box">
-                <span class="tk-answer-text">$9.90</span>
-              </div>
-              <img
-                src="./assets/tick.png"
-                alt="Correct"
-                class="tk-answer-icon"
-                decoding="async"
-              >
-            </div>
-
-            <div class="tk-how-product-wrap">
-              <img
-                src="./assets/products/Vegemite-560g.png"
-                alt="Vegemite 560g"
-                class="tk-how-product-image"
-                loading="eager"
-                decoding="async"
-                fetchpriority="high"
-              >
-            </div>
-
-            <div class="tk-how-product-name">Vegemite 560g</div>
-            <div class="tk-how-product-store">Woolworths</div>
-          </div>
         </div>
 
-        <div class="tk-how-actions">
-          <button id="btn-how-start" class="tk-action-button" type="button">ENTER</button>
-        </div>
-      </section>
-
-      <section class="tk-screen tk-screen--round hidden" id="screen-round">
-        <div class="tk-round-content">
-          <div class="tk-answer-row">
-            <div class="tk-answer-box">
-              <span class="tk-answer-text" id="answer-text"></span>
+        <div class="how-middle">
+          <div class="answer-row">
+            <div class="answer-box">
+              <span class="answer-text">$9.90</span>
             </div>
-
             <img
-              src=""
-              alt=""
-              class="tk-answer-icon hidden"
-              id="answer-icon"
+              src="./assets/tick.png"
+              alt="Correct"
+              class="answer-icon"
               decoding="async"
             >
           </div>
 
-          <div class="tk-product-wrap">
+          <div class="product-hero product-hero--how">
+            <img
+              src="./assets/woolworths-vegemite-560g.png"
+              alt="Vegemite 560g"
+              class="product-image product-image--how"
+              decoding="async"
+              fetchpriority="high"
+            >
+          </div>
+
+          <div class="product-name product-name--how">Vegemite 560g</div>
+          <div class="product-store">Woolworths</div>
+        </div>
+
+        <div class="how-bottom">
+          <button id="btn-how-start" class="action-button" type="button">ENTER</button>
+        </div>
+      </section>
+
+      <section class="screen screen--round hidden" id="screen-round">
+        <div class="round-top">
+          <div class="answer-row">
+            <div class="answer-box">
+              <span class="answer-text" id="answer-text"></span>
+            </div>
+            <img
+              id="answer-icon"
+              src=""
+              alt=""
+              class="answer-icon hidden"
+              decoding="async"
+            >
+          </div>
+        </div>
+
+        <div class="round-middle">
+          <div class="product-hero">
             <img
               id="product-image"
               alt=""
-              class="tk-product-image"
-              loading="eager"
+              class="product-image"
               decoding="async"
               fetchpriority="high"
             >
@@ -107,60 +106,58 @@
               id="special-badge"
               src="./assets/Special.png"
               alt="Special"
-              class="tk-special-badge hidden"
+              class="special-badge hidden"
               decoding="async"
             >
           </div>
 
-          <div class="tk-product-details">
-            <div class="tk-product-name" id="product-name"></div>
-            <div class="tk-product-store" id="product-store"></div>
-          </div>
+          <div class="product-name" id="product-name"></div>
+          <div class="product-store" id="product-store"></div>
 
-          <div class="tk-price-strip" id="price-strip"></div>
+          <div class="price-grid" id="price-grid"></div>
         </div>
 
-        <div class="tk-bottom-bar">
-          <div class="tk-trolley-wrap">
+        <div class="round-bottom">
+          <div class="trolley-wrap">
             <img
               src="./assets/trolley.png"
               alt="Trolley"
-              class="tk-trolley"
+              class="trolley-image"
               decoding="async"
             >
             <img
               id="trolley-count-image"
-              class="tk-trolley-count-image hidden"
               src=""
               alt=""
+              class="trolley-count-image hidden"
               decoding="async"
             >
           </div>
 
-          <button id="btn-round-action" class="tk-action-button" type="button">ENTER</button>
+          <button id="btn-round-action" class="action-button" type="button">ENTER</button>
         </div>
       </section>
 
-      <section class="tk-screen tk-screen--share hidden" id="screen-share">
-        <div class="tk-share-date" id="share-date">April 29, 2026</div>
+      <section class="screen screen--share hidden" id="screen-share">
+        <div class="share-date" id="share-date">April 29, 2026</div>
 
-        <div class="tk-share-trolley-wrap">
+        <div class="share-trolley">
           <img
             src="./assets/trolley.png"
             alt="Trolley"
-            class="tk-trolley tk-trolley--share"
+            class="trolley-image trolley-image--share"
             decoding="async"
           >
           <img
             id="share-trolley-count-image"
-            class="tk-trolley-count-image tk-trolley-count-image--share hidden"
             src=""
             alt=""
+            class="trolley-count-image trolley-count-image--share hidden"
             decoding="async"
           >
         </div>
 
-        <button id="btn-share" class="tk-action-button" type="button">SHARE</button>
+        <button id="btn-share" class="action-button" type="button">SHARE</button>
       </section>
     </main>
 

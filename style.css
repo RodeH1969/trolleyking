@@ -8,13 +8,10 @@
   --bg: #ffffff;
   --text: #111111;
   --muted: #666666;
-  --pill-bg: #d3d3d3;
-  --pill-text: #111111;
-  --answer-border: #000000;
+  --dark: #1f1f24;
   --button-bg: #cfcfcf;
-  --button-text: #111111;
-  --play-bg: #202024;
-  --play-text: #ffffff;
+  --pill-bg: #d4d4d4;
+  --border: #000000;
 }
 
 html,
@@ -23,9 +20,7 @@ body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  height: 100%;
-  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -36,439 +31,491 @@ body {
   display: none !important;
 }
 
-.tk-app {
+.app-shell {
   width: 100%;
-  max-width: 420px;
-  height: 100vh;
+  max-width: 430px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 8px 10px 8px;
+  padding: 14px 14px 18px;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  overflow: hidden;
 }
 
-.tk-screen {
-  height: calc(100vh - 16px);
+.screen {
+  min-height: calc(100vh - 32px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* INTRO */
 
-.tk-screen--intro {
+.screen--intro {
   justify-content: space-between;
 }
 
-.tk-intro-top {
+.intro-top {
   display: flex;
   justify-content: center;
-  margin-top: 0;
+  padding-top: 4px;
 }
 
-.tk-intro-logo {
+.intro-logo {
   width: 100%;
-  max-width: 265px;
+  max-width: 320px;
   height: auto;
   object-fit: contain;
 }
 
-.tk-intro-middle {
-  text-align: center;
-}
-
-.tk-intro-title {
-  margin: 4px 0 12px;
-  font-size: clamp(1.45rem, 4vw, 2.05rem);
-  line-height: 1.06;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-}
-
-.tk-play-button {
-  width: 100%;
-  max-width: 172px;
-  margin: 0 auto;
-  display: block;
-  border: none;
-  border-radius: 999px;
-  background: var(--play-bg);
-  color: var(--play-text);
-  padding: 11px 16px;
-  font-size: 1.45rem;
-  font-weight: 300;
-  cursor: pointer;
-}
-
-.tk-intro-bottom {
+.intro-middle {
   text-align: center;
   margin-top: 6px;
 }
 
-.tk-date {
-  font-size: 0.9rem;
+.intro-title {
+  margin: 0 0 20px;
+  font-size: clamp(2.1rem, 6vw, 3rem);
+  line-height: 1.08;
   font-weight: 700;
 }
 
-.tk-issue,
-.tk-editor {
-  font-size: 0.82rem;
-  margin-top: 2px;
+.play-button {
+  border: none;
+  border-radius: 999px;
+  background: var(--dark);
+  color: #ffffff;
+  min-width: 190px;
+  min-height: 66px;
+  padding: 14px 22px;
+  font-size: 2rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.intro-bottom {
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.date-line {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.meta-line {
+  margin-top: 4px;
+  font-size: 0.95rem;
 }
 
 /* HOW */
 
-.tk-screen--how {
+.screen--how {
   justify-content: space-between;
 }
 
-.tk-how-content {
-  padding-top: 0;
+.how-top {
+  padding-top: 4px;
 }
 
-.tk-how-title {
-  margin: 0 0 4px;
-  font-size: 2rem;
-  line-height: 0.96;
-  font-weight: 800;
+.how-title {
+  margin: 0 0 8px;
+  font-size: 2.5rem;
+  line-height: 0.95;
+  font-weight: 700;
 }
 
-.tk-how-copy {
+.how-copy {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.08;
-  font-weight: 300;
+  font-size: 1.35rem;
+  line-height: 1.18;
 }
 
-.tk-how-example {
-  margin-top: 8px;
+.how-middle {
+  text-align: center;
+  margin-top: 14px;
 }
 
-.tk-answer-row {
+.answer-row {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 48px;
+  align-items: center;
+  gap: 14px;
 }
 
-.tk-answer-box {
-  min-width: 118px;
-  min-height: 50px;
-  padding: 4px 14px;
-  border: 4px solid var(--answer-border);
-  border-radius: 20px;
+.answer-box {
+  min-width: 154px;
+  min-height: 68px;
+  padding: 10px 20px;
+  border: 4px solid var(--border);
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #ffffff;
 }
 
-.tk-answer-text {
-  font-size: 1.4rem;
+.answer-text {
+  font-size: 1.9rem;
   line-height: 1;
   font-weight: 700;
 }
 
-.tk-answer-icon {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
+.answer-icon {
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
-.tk-how-product-wrap {
+.product-hero {
+  margin-top: 14px;
   display: flex;
   justify-content: center;
-  margin-top: 6px;
+  position: relative;
 }
 
-.tk-how-product-image {
+.product-hero--how {
+  margin-top: 18px;
+}
+
+.product-image {
   width: 100%;
-  max-width: 152px;
-  max-height: 152px;
+  max-width: 230px;
+  max-height: 230px;
   object-fit: contain;
 }
 
-.tk-how-product-name {
-  margin-top: 5px;
+.product-image--how {
+  max-width: 210px;
+  max-height: 210px;
+}
+
+.special-badge {
+  position: absolute;
+  right: 18px;
+  top: 70px;
+  width: 84px;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-name {
+  margin-top: 10px;
   text-align: center;
-  font-size: 0.94rem;
-  line-height: 1.05;
+  font-size: 1.3rem;
+  line-height: 1.08;
   font-weight: 700;
 }
 
-.tk-how-product-store {
-  margin-top: 1px;
+.product-name--how {
+  margin-top: 14px;
+}
+
+.product-store {
+  margin-top: 4px;
   text-align: center;
-  font-size: 0.76rem;
+  font-size: 0.95rem;
   color: var(--muted);
 }
 
-.tk-how-actions {
-  padding-top: 8px;
+.how-bottom {
   display: flex;
   justify-content: flex-end;
+  padding-top: 20px;
 }
 
 /* ROUND */
 
-.tk-screen--round {
+.screen--round {
   justify-content: space-between;
 }
 
-.tk-round-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+.round-top {
+  padding-top: 2px;
 }
 
-.tk-product-wrap {
-  margin-top: 3px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  min-height: 142px;
-}
-
-.tk-product-image {
-  width: 100%;
-  max-width: 172px;
-  max-height: 142px;
-  object-fit: contain;
-}
-
-.tk-special-badge {
-  position: absolute;
-  right: 14px;
-  top: 46px;
-  width: 52px;
-  height: auto;
-  object-fit: contain;
-}
-
-.tk-product-details {
-  margin-top: 3px;
-  text-align: center;
-}
-
-.tk-product-name {
-  font-size: 0.95rem;
-  line-height: 1.02;
-  font-weight: 500;
-}
-
-.tk-product-store {
-  margin-top: 1px;
-  font-size: 0.76rem;
-  line-height: 1.05;
-  color: var(--muted);
-}
-
-.tk-price-strip {
+.round-middle {
   margin-top: 8px;
+}
+
+.price-grid {
+  margin-top: 18px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 7px 8px;
-  align-items: center;
-  justify-items: center;
+  gap: 12px 12px;
 }
 
-.tk-price-slot {
-  width: 100%;
+.price-slot {
+  min-height: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 38px;
 }
 
-.tk-price-slot--empty {
+.price-slot--empty {
   visibility: hidden;
 }
 
-.tk-price-btn {
+.price-button {
   border: none;
   border-radius: 999px;
   background: var(--pill-bg);
-  color: var(--pill-text);
-  min-width: 82px;
-  min-height: 38px;
-  padding: 5px 8px;
-  font-size: 0.88rem;
-  line-height: 1;
+  color: var(--text);
+  min-width: 102px;
+  min-height: 54px;
+  padding: 8px 14px;
+  font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
 }
 
-.tk-price-btn.is-selected {
+.price-button.is-selected {
   outline: 3px solid #000000;
   outline-offset: 1px;
 }
 
-.tk-bottom-bar {
-  margin-top: 6px;
+.round-bottom {
+  margin-top: 14px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 8px;
+  gap: 16px;
 }
 
-.tk-trolley-wrap,
-.tk-share-trolley-wrap {
+.trolley-wrap,
+.share-trolley {
   position: relative;
   display: inline-block;
 }
 
-.tk-trolley {
-  width: 98px;
+.trolley-image {
+  width: 138px;
   height: auto;
   object-fit: contain;
 }
 
-.tk-trolley--share {
-  width: 160px;
+.trolley-image--share {
+  width: 230px;
 }
 
-.tk-trolley-count-image {
+.trolley-count-image {
   position: absolute;
   left: 50%;
-  top: 49%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  width: 25px;
+  width: 34px;
   height: auto;
-  max-width: 40%;
-  max-height: 40%;
   object-fit: contain;
 }
 
-.tk-trolley-count-image--share {
-  width: 40px;
-  max-width: 38%;
-  max-height: 38%;
+.trolley-count-image--share {
+  width: 56px;
 }
 
-.tk-action-button {
+.action-button {
   border: none;
-  border-radius: 20px;
+  border-radius: 24px;
   background: var(--button-bg);
-  color: var(--button-text);
-  min-width: 112px;
-  min-height: 54px;
-  padding: 8px 12px;
-  font-size: 1.28rem;
+  color: var(--text);
+  min-width: 150px;
+  min-height: 82px;
+  padding: 12px 20px;
+  font-size: 1.9rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
   cursor: pointer;
 }
 
 /* SHARE */
 
-.tk-screen--share {
+.screen--share {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.tk-share-date {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 8px;
+.share-date {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 #btn-share {
-  margin-top: 10px;
+  margin-top: 22px;
 }
 
-button,
-.tk-price-btn {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
+/* MOBILE TIGHTER */
 
-button:active,
-.tk-price-btn:active {
-  transform: scale(0.98);
+@media (max-height: 780px) {
+  .app-shell {
+    padding: 10px 10px 12px;
+  }
+
+  .screen {
+    min-height: calc(100vh - 22px);
+  }
+
+  .intro-logo {
+    max-width: 280px;
+  }
+
+  .intro-title {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+  }
+
+  .play-button {
+    min-width: 164px;
+    min-height: 56px;
+    font-size: 1.6rem;
+  }
+
+  .how-title {
+    font-size: 2rem;
+  }
+
+  .how-copy {
+    font-size: 1.05rem;
+  }
+
+  .answer-box {
+    min-width: 132px;
+    min-height: 56px;
+  }
+
+  .answer-text {
+    font-size: 1.55rem;
+  }
+
+  .answer-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .product-image {
+    max-width: 185px;
+    max-height: 185px;
+  }
+
+  .product-image--how {
+    max-width: 172px;
+    max-height: 172px;
+  }
+
+  .product-name {
+    font-size: 1.05rem;
+  }
+
+  .product-store {
+    font-size: 0.85rem;
+  }
+
+  .price-grid {
+    gap: 9px 9px;
+    margin-top: 14px;
+  }
+
+  .price-slot {
+    min-height: 46px;
+  }
+
+  .price-button {
+    min-width: 88px;
+    min-height: 46px;
+    font-size: 0.92rem;
+  }
+
+  .trolley-image {
+    width: 114px;
+  }
+
+  .trolley-image--share {
+    width: 190px;
+  }
+
+  .trolley-count-image {
+    width: 28px;
+  }
+
+  .trolley-count-image--share {
+    width: 44px;
+  }
+
+  .action-button {
+    min-width: 124px;
+    min-height: 66px;
+    font-size: 1.55rem;
+  }
 }
 
 /* IPAD */
 
 @media (min-width: 768px) {
-  html,
-  body {
-    overflow: auto;
+  .app-shell {
+    max-width: 760px;
+    padding: 24px 32px 30px;
   }
 
-  .tk-app {
-    max-width: 700px;
-    height: auto;
-    min-height: 100vh;
-    padding: 16px 22px 18px;
-    overflow: visible;
+  .intro-logo {
+    max-width: 390px;
   }
 
-  .tk-screen {
-    height: auto;
-    min-height: calc(100vh - 34px);
-    overflow: visible;
+  .intro-title {
+    font-size: 3.2rem;
   }
 
-  .tk-intro-logo {
-    max-width: 340px;
+  .play-button {
+    min-width: 230px;
+    min-height: 76px;
+    font-size: 2.3rem;
   }
 
-  .tk-intro-title {
-    font-size: 2.5rem;
+  .how-title {
+    font-size: 3.2rem;
   }
 
-  .tk-how-title {
-    font-size: 2.8rem;
-  }
-
-  .tk-how-copy {
-    font-size: 1.35rem;
-  }
-
-  .tk-how-product-image {
-    max-width: 220px;
-    max-height: 220px;
-  }
-
-  .tk-product-wrap {
-    min-height: 250px;
-  }
-
-  .tk-product-image {
-    max-width: 280px;
-    max-height: 230px;
-  }
-
-  .tk-product-name {
-    font-size: 1.4rem;
-  }
-
-  .tk-price-btn {
-    min-width: 116px;
-    min-height: 54px;
-    font-size: 1.1rem;
-  }
-
-  .tk-action-button {
-    min-width: 160px;
-    min-height: 78px;
+  .how-copy {
     font-size: 1.8rem;
   }
 
-  .tk-trolley {
-    width: 140px;
+  .product-image {
+    max-width: 300px;
+    max-height: 300px;
   }
 
-  .tk-trolley-count-image {
-    width: 38px;
+  .product-image--how {
+    max-width: 260px;
+    max-height: 260px;
   }
 
-  .tk-trolley-count-image--share {
-    width: 58px;
+  .price-button {
+    min-width: 136px;
+    min-height: 62px;
+    font-size: 1.25rem;
   }
+
+  .trolley-image {
+    width: 170px;
+  }
+
+  .trolley-image--share {
+    width: 280px;
+  }
+
+  .trolley-count-image {
+    width: 42px;
+  }
+
+  .trolley-count-image--share {
+    width: 68px;
+  }
+
+  .action-button {
+    min-width: 190px;
+    min-height: 96px;
+    font-size: 2.2rem;
+  }
+}
+
+button,
+.price-button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }

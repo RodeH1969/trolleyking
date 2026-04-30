@@ -33,32 +33,31 @@ const shareDateEl = document.getElementById("share-date");
 
 const answerTextEl = document.getElementById("answer-text");
 const answerIconEl = document.getElementById("answer-icon");
-
 const productImageEl = document.getElementById("product-image");
 const productNameEl = document.getElementById("product-name");
 const productStoreEl = document.getElementById("product-store");
 const specialBadgeEl = document.getElementById("special-badge");
-
-const priceStripEl = document.getElementById("price-strip");
-
+const priceGridEl = document.getElementById("price-grid");
 const trolleyCountImageEl = document.getElementById("trolley-count-image");
 const shareTrolleyCountImageEl = document.getElementById("share-trolley-count-image");
 
-const imagePreloadCache = new Set();
+const imageCache = new Set();
 
 function showScreen(screen) {
-  [screenIntro, screenHow, screenRound, screenShare].forEach(s => s.classList.add("hidden"));
+  [screenIntro, screenHow, screenRound, screenShare].forEach(section => {
+    section.classList.add("hidden");
+  });
   screen.classList.remove("hidden");
 }
 
-function setMeta() {
+function setDates() {
   const dateText = "April 29, 2026";
   introDateEl.textContent = dateText;
   shareDateEl.textContent = dateText;
 }
 
 function parseBatch(text) {
-  const blocks = text.split(/ITEM\s*/).map(b => b.trim()).filter(Boolean);
+  const blocks = text.split(/ITEM\s*/).map(block => block.trim()).filter(Boolean);
 
   return blocks.map(block => {
     const name = (block.match(/NAME:\s*(.+)/) || [, ""])[1].trim();
@@ -69,7 +68,7 @@ function parseBatch(text) {
   });
 }
 
-function pickProducts() {
+function selectTodaysProducts() {
   todaysProducts = PRODUCT_ORDER
     .map(name => items.find(item => item.name === name))
     .filter(Boolean);
@@ -83,20 +82,15 @@ function buildPricePool() {
 }
 
 function preloadImage(src) {
-  if (!src || imagePreloadCache.has(src)) return;
+  if (!src || imageCache.has(src)) return;
   const img = new Image();
   img.decoding = "async";
   img.src = src;
-  imagePreloadCache.add(src);
+  imageCache.add(src);
 }
 
-function preloadTodaysImages() {
+function preloadRoundImages() {
   todaysProducts.forEach(product => preloadImage(product.image));
-}
-
-function preloadNextImage() {
-  const nextProduct = todaysProducts[currentIndex + 1];
-  if (nextProduct) preloadImage(nextProduct.image);
 }
 
 function updateTrolleyImage(el, count) {
@@ -121,32 +115,32 @@ function resetRoundState() {
   btnRoundAction.textContent = "ENTER";
 }
 
-function renderPriceStrip() {
-  priceStripEl.innerHTML = "";
+function renderPriceGrid() {
+  priceGridEl.innerHTML = "";
 
   pricePool.forEach((entry, index) => {
     const slot = document.createElement("div");
-    slot.className = "tk-price-slot";
+    slot.className = "price-slot";
 
     if (entry.usedCorrectly) {
-      slot.classList.add("tk-price-slot--empty");
+      slot.classList.add("price-slot--empty");
       slot.textContent = "$0.00";
-      priceStripEl.appendChild(slot);
+      priceGridEl.appendChild(slot);
       return;
     }
 
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "tk-price-btn";
-    button.textContent = `$${entry.value.toFixed(2)}`;
+    button.className = "price-button";
     button.dataset.index = String(index);
+    button.textContent = `$${entry.value.toFixed(2)}`;
 
     if (selectedPriceIndex === index && phase === "select") {
       button.classList.add("is-selected");
     }
 
     slot.appendChild(button);
-    priceStripEl.appendChild(slot);
+    priceGridEl.appendChild(slot);
   });
 }
 
@@ -168,50 +162,48 @@ function renderRound() {
   }
 
   updateTrolleyImage(trolleyCountImageEl, trolleyCount);
-  renderPriceStrip();
-  preloadNextImage();
+  renderPriceGrid();
 }
 
 function selectPrice(index) {
   if (phase !== "select") return;
   selectedPriceIndex = index;
-  answerTextEl.textContent = `$${pricePool[selectedPriceIndex].value.toFixed(2)}`;
-  renderPriceStrip();
+  answerTextEl.textContent = `$${pricePool[index].value.toFixed(2)}`;
+  renderPriceGrid();
 }
 
-function handlePriceInteraction(event) {
-  const button = event.target.closest(".tk-price-btn");
+function onPriceGridClick(event) {
+  const button = event.target.closest(".price-button");
   if (!button) return;
   selectPrice(Number(button.dataset.index));
 }
 
-function handleRoundAction() {
-  if (phase === "select") {
-    if (selectedPriceIndex === null) return;
+function scoreCurrentRound() {
+  if (selectedPriceIndex === null) return;
 
-    const product = todaysProducts[currentIndex];
-    const selected = pricePool[selectedPriceIndex];
-    const isCorrect = Math.abs(selected.value - product.price) < 0.005;
+  const product = todaysProducts[currentIndex];
+  const selected = pricePool[selectedPriceIndex];
+  const isCorrect = Math.abs(selected.value - product.price) < 0.005;
 
-    phase = "feedback";
-    btnRoundAction.textContent = "NEXT";
+  phase = "feedback";
+  btnRoundAction.textContent = "NEXT";
 
-    if (isCorrect) {
-      trolleyCount += 1;
-      updateTrolleyImage(trolleyCountImageEl, trolleyCount);
-      pricePool[selectedPriceIndex].usedCorrectly = true;
-      answerIconEl.src = "./assets/tick.png";
-      answerIconEl.alt = "Correct";
-    } else {
-      answerIconEl.src = "./assets/cross.png";
-      answerIconEl.alt = "Incorrect";
-    }
-
-    answerIconEl.classList.remove("hidden");
-    renderPriceStrip();
-    return;
+  if (isCorrect) {
+    trolleyCount += 1;
+    selected.usedCorrectly = true;
+    updateTrolleyImage(trolleyCountImageEl, trolleyCount);
+    answerIconEl.src = "./assets/tick.png";
+    answerIconEl.alt = "Correct";
+  } else {
+    answerIconEl.src = "./assets/cross.png";
+    answerIconEl.alt = "Incorrect";
   }
 
+  answerIconEl.classList.remove("hidden");
+  renderPriceGrid();
+}
+
+function nextRound() {
   currentIndex += 1;
 
   if (currentIndex >= todaysProducts.length) {
@@ -222,12 +214,20 @@ function handleRoundAction() {
   renderRound();
 }
 
+function onRoundAction() {
+  if (phase === "select") {
+    scoreCurrentRound();
+    return;
+  }
+  nextRound();
+}
+
 function showSummary() {
   updateTrolleyImage(shareTrolleyCountImageEl, trolleyCount);
   showScreen(screenShare);
 }
 
-function copyShare() {
+function onShare() {
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
 
   if (navigator.share) {
@@ -241,15 +241,17 @@ function copyShare() {
 }
 
 async function init() {
-  setMeta();
+  setDates();
 
   const response = await fetch(BATCH_URL);
   const text = await response.text();
 
   items = parseBatch(text);
-  pickProducts();
+  selectTodaysProducts();
   buildPricePool();
-  preloadTodaysImages();
+  preloadRoundImages();
+
+  showScreen(screenIntro);
 }
 
 btnPlay.addEventListener("click", () => {
@@ -264,14 +266,8 @@ btnHowStart.addEventListener("click", () => {
   showScreen(screenRound);
 });
 
-priceStripEl.addEventListener("click", handlePriceInteraction);
-
-btnRoundAction.addEventListener("click", () => {
-  handleRoundAction();
-});
-
-btnShare.addEventListener("click", () => {
-  copyShare();
-});
+priceGridEl.addEventListener("click", onPriceGridClick);
+btnRoundAction.addEventListener("click", onRoundAction);
+btnShare.addEventListener("click", onShare);
 
 init().catch(console.error);
