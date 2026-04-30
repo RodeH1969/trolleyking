@@ -41,7 +41,7 @@ body {
   max-width: 420px;
   height: 100vh;
   margin: 0 auto;
-  padding: 6px 10px 8px;
+  padding: 8px 10px 8px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -49,7 +49,7 @@ body {
 }
 
 .tk-screen {
-  height: calc(100vh - 14px);
+  height: calc(100vh - 16px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -69,7 +69,7 @@ body {
 
 .tk-intro-logo {
   width: 100%;
-  max-width: 255px;
+  max-width: 265px;
   height: auto;
   object-fit: contain;
 }
@@ -79,16 +79,16 @@ body {
 }
 
 .tk-intro-title {
-  margin: 2px 0 10px;
-  font-size: clamp(1.35rem, 4.1vw, 2rem);
-  line-height: 1.05;
+  margin: 4px 0 12px;
+  font-size: clamp(1.45rem, 4vw, 2.05rem);
+  line-height: 1.06;
   font-weight: 300;
   letter-spacing: -0.02em;
 }
 
 .tk-play-button {
   width: 100%;
-  max-width: 168px;
+  max-width: 172px;
   margin: 0 auto;
   display: block;
   border: none;
@@ -96,7 +96,7 @@ body {
   background: var(--play-bg);
   color: var(--play-text);
   padding: 11px 16px;
-  font-size: 1.42rem;
+  font-size: 1.45rem;
   font-weight: 300;
   cursor: pointer;
 }
@@ -107,14 +107,14 @@ body {
 }
 
 .tk-date {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
 .tk-issue,
 .tk-editor {
   font-size: 0.82rem;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /* HOW */
@@ -128,15 +128,15 @@ body {
 }
 
 .tk-how-title {
-  margin: 0 0 3px;
-  font-size: 1.95rem;
-  line-height: 0.95;
+  margin: 0 0 4px;
+  font-size: 2rem;
+  line-height: 0.96;
   font-weight: 800;
 }
 
 .tk-how-copy {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.08;
   font-weight: 300;
 }
@@ -150,11 +150,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 46px;
+  min-height: 48px;
 }
 
 .tk-answer-box {
-  min-width: 116px;
+  min-width: 118px;
   min-height: 50px;
   padding: 4px 14px;
   border: 4px solid var(--answer-border);
@@ -166,7 +166,7 @@ body {
 }
 
 .tk-answer-text {
-  font-size: 1.38rem;
+  font-size: 1.4rem;
   line-height: 1;
   font-weight: 700;
 }
@@ -186,15 +186,15 @@ body {
 
 .tk-how-product-image {
   width: 100%;
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 152px;
+  max-height: 152px;
   object-fit: contain;
 }
 
 .tk-how-product-name {
   margin-top: 5px;
   text-align: center;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   line-height: 1.05;
   font-weight: 700;
 }
@@ -230,21 +230,20 @@ body {
   display: flex;
   justify-content: center;
   position: relative;
-  min-height: 140px;
-  flex: 0 0 auto;
+  min-height: 142px;
 }
 
 .tk-product-image {
   width: 100%;
-  max-width: 170px;
-  max-height: 140px;
+  max-width: 172px;
+  max-height: 142px;
   object-fit: contain;
 }
 
 .tk-special-badge {
   position: absolute;
-  right: 18px;
-  top: 48px;
+  right: 14px;
+  top: 46px;
   width: 52px;
   height: auto;
   object-fit: contain;
@@ -256,7 +255,7 @@ body {
 }
 
 .tk-product-name {
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   line-height: 1.02;
   font-weight: 500;
 }
@@ -323,7 +322,7 @@ body {
 }
 
 .tk-trolley {
-  width: 95px;
+  width: 98px;
   height: auto;
   object-fit: contain;
 }
@@ -334,16 +333,20 @@ body {
 
 .tk-trolley-count-image {
   position: absolute;
-  left: 52%;
-  top: 50%;
+  left: 50%;
+  top: 49%;
   transform: translate(-50%, -50%);
-  width: 34px;
+  width: 25px;
   height: auto;
+  max-width: 40%;
+  max-height: 40%;
   object-fit: contain;
 }
 
 .tk-trolley-count-image--share {
-  width: 64px;
+  width: 40px;
+  max-width: 38%;
+  max-height: 38%;
 }
 
 .tk-action-button {
@@ -351,7 +354,7 @@ body {
   border-radius: 20px;
   background: var(--button-bg);
   color: var(--button-text);
-  min-width: 110px;
+  min-width: 112px;
   min-height: 54px;
   padding: 8px 12px;
   font-size: 1.28rem;
@@ -459,5 +462,13 @@ button:active,
 
   .tk-trolley {
     width: 140px;
+  }
+
+  .tk-trolley-count-image {
+    width: 38px;
+  }
+
+  .tk-trolley-count-image--share {
+    width: 58px;
   }
 }
