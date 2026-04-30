@@ -179,17 +179,11 @@ function renderRound() {
 
 function selectPrice(index) {
   if (phase !== "select" || inputLocked) return;
+
   selectedPriceIndex = index;
   answerTextEl.textContent = `$${pricePool[index].value.toFixed(2)}`;
   renderPriceGrid();
   setRoundButtonState();
-}
-
-function onPriceGridPointerUp(event) {
-  const button = event.target.closest(".price-button");
-  if (!button) return;
-  event.preventDefault();
-  selectPrice(Number(button.dataset.index));
 }
 
 function scoreCurrentRound() {
@@ -218,9 +212,9 @@ function scoreCurrentRound() {
   renderPriceGrid();
   setRoundButtonState();
 
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     inputLocked = false;
-  });
+  }, 80);
 }
 
 function nextRound() {
@@ -231,18 +225,59 @@ function nextRound() {
 
   if (currentIndex >= todaysProducts.length) {
     showSummary();
-    inputLocked = false;
+    setTimeout(() => {
+      inputLocked = false;
+    }, 80);
     return;
   }
 
   renderRound();
 
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     inputLocked = false;
-  });
+  }, 80);
 }
 
-function onRoundActionPointerUp(event) {
+function showSummary() {
+  updateTrolleyImage(shareTrolleyCountImageEl, trolleyCount);
+  showScreen(screenShare);
+}
+
+function onPlayPress(event) {
+  event.preventDefault();
+  if (inputLocked) return;
+  inputLocked = true;
+  showScreen(screenHow);
+  setTimeout(() => {
+    inputLocked = false;
+  }, 80);
+}
+
+function onHowStartPress(event) {
+  event.preventDefault();
+  if (inputLocked) return;
+  inputLocked = true;
+
+  currentIndex = 0;
+  trolleyCount = 0;
+  buildPricePool();
+  renderRound();
+  showScreen(screenRound);
+
+  setTimeout(() => {
+    inputLocked = false;
+  }, 80);
+}
+
+function onPriceGridPress(event) {
+  const button = event.target.closest(".price-button");
+  if (!button) return;
+
+  event.preventDefault();
+  selectPrice(Number(button.dataset.index));
+}
+
+function onRoundActionPress(event) {
   event.preventDefault();
 
   if (btnRoundAction.disabled || inputLocked) return;
@@ -255,13 +290,9 @@ function onRoundActionPointerUp(event) {
   nextRound();
 }
 
-function showSummary() {
-  updateTrolleyImage(shareTrolleyCountImageEl, trolleyCount);
-  showScreen(screenShare);
-}
-
-function onSharePointerUp(event) {
+function onSharePress(event) {
   event.preventDefault();
+  if (inputLocked) return;
 
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
 
@@ -273,20 +304,6 @@ function onSharePointerUp(event) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch(() => {});
   }
-}
-
-function onPlayPointerUp(event) {
-  event.preventDefault();
-  showScreen(screenHow);
-}
-
-function onHowStartPointerUp(event) {
-  event.preventDefault();
-  currentIndex = 0;
-  trolleyCount = 0;
-  buildPricePool();
-  renderRound();
-  showScreen(screenRound);
 }
 
 async function init() {
@@ -303,10 +320,10 @@ async function init() {
   showScreen(screenIntro);
 }
 
-btnPlay.addEventListener("pointerup", onPlayPointerUp);
-btnHowStart.addEventListener("pointerup", onHowStartPointerUp);
-priceGridEl.addEventListener("pointerup", onPriceGridPointerUp);
-btnRoundAction.addEventListener("pointerup", onRoundActionPointerUp);
-btnShare.addEventListener("pointerup", onSharePointerUp);
+btnPlay.addEventListener("pointerdown", onPlayPress);
+btnHowStart.addEventListener("pointerdown", onHowStartPress);
+priceGridEl.addEventListener("pointerdown", onPriceGridPress);
+btnRoundAction.addEventListener("pointerdown", onRoundActionPress);
+btnShare.addEventListener("pointerdown", onSharePress);
 
 init().catch(console.error);
