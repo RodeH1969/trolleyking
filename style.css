@@ -168,14 +168,14 @@ body {
 }
 
 .product-hero {
-  margin-top: 14px;
+  margin-top: 2px;
   display: flex;
   justify-content: center;
   position: relative;
 }
 
 .product-hero--how {
-  margin-top: 18px;
+  margin-top: 2px;
 }
 
 .product-image {
