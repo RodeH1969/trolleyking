@@ -8,8 +8,20 @@ const PRODUCT_ORDER = [
   "Byron Bay Chilli Co. Jalapeno Sauce 250g"
 ];
 
-const FIXED_PRICE_POOL = [1.00, 3.99, 5.00, 4.99, 8.99, 24.99, 15.99, 1.29, 22.99];
-
+const FIXED_PRICE_POOL = [
+  1.00,
+  3.99,
+  5.00,
+  4.99,
+  6.90,
+  8.99,
+  11.49,
+  15.99,
+  17.50,
+  24.99,
+  1.29,
+  22.99
+];
 let items = [];
 let todaysProducts = [];
 let pricePool = [];
