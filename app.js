@@ -17,7 +17,8 @@ let currentIndex = 0;
 let trolleyCount = 0;
 let selectedPriceIndex = null;
 let phase = "select";
-let inputLocked = false;
+let tapLock = false;
+let touchTriggeredAt = 0;
 
 const screenIntro = document.getElementById("screen-intro");
 const screenHow = document.getElementById("screen-how");
@@ -119,7 +120,6 @@ function setRoundButtonState() {
 function resetRoundState() {
   selectedPriceIndex = null;
   phase = "select";
-  inputLocked = false;
   answerTextEl.textContent = "";
   answerIconEl.src = "";
   answerIconEl.alt = "";
@@ -178,8 +178,7 @@ function renderRound() {
 }
 
 function selectPrice(index) {
-  if (phase !== "select" || inputLocked) return;
-
+  if (phase !== "select") return;
   selectedPriceIndex = index;
   answerTextEl.textContent = `$${pricePool[index].value.toFixed(2)}`;
   renderPriceGrid();
@@ -187,9 +186,7 @@ function selectPrice(index) {
 }
 
 function scoreCurrentRound() {
-  if (selectedPriceIndex === null || inputLocked) return;
-
-  inputLocked = true;
+  if (selectedPriceIndex === null) return;
 
   const product = todaysProducts[currentIndex];
   const selected = pricePool[selectedPriceIndex];
@@ -211,31 +208,17 @@ function scoreCurrentRound() {
   answerIconEl.classList.remove("hidden");
   renderPriceGrid();
   setRoundButtonState();
-
-  setTimeout(() => {
-    inputLocked = false;
-  }, 80);
 }
 
-function nextRound() {
-  if (inputLocked) return;
-
-  inputLocked = true;
+function goToNextRound() {
   currentIndex += 1;
 
   if (currentIndex >= todaysProducts.length) {
     showSummary();
-    setTimeout(() => {
-      inputLocked = false;
-    }, 80);
     return;
   }
 
   renderRound();
-
-  setTimeout(() => {
-    inputLocked = false;
-  }, 80);
 }
 
 function showSummary() {
@@ -243,57 +226,7 @@ function showSummary() {
   showScreen(screenShare);
 }
 
-function onPlayPress(event) {
-  event.preventDefault();
-  if (inputLocked) return;
-  inputLocked = true;
-  showScreen(screenHow);
-  setTimeout(() => {
-    inputLocked = false;
-  }, 80);
-}
-
-function onHowStartPress(event) {
-  event.preventDefault();
-  if (inputLocked) return;
-  inputLocked = true;
-
-  currentIndex = 0;
-  trolleyCount = 0;
-  buildPricePool();
-  renderRound();
-  showScreen(screenRound);
-
-  setTimeout(() => {
-    inputLocked = false;
-  }, 80);
-}
-
-function onPriceGridPress(event) {
-  const button = event.target.closest(".price-button");
-  if (!button) return;
-
-  event.preventDefault();
-  selectPrice(Number(button.dataset.index));
-}
-
-function onRoundActionPress(event) {
-  event.preventDefault();
-
-  if (btnRoundAction.disabled || inputLocked) return;
-
-  if (phase === "select") {
-    scoreCurrentRound();
-    return;
-  }
-
-  nextRound();
-}
-
-function onSharePress(event) {
-  event.preventDefault();
-  if (inputLocked) return;
-
+function shareResult() {
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
 
   if (navigator.share) {
@@ -304,6 +237,101 @@ function onSharePress(event) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch(() => {});
   }
+}
+
+function lockTap() {
+  tapLock = true;
+  setTimeout(() => {
+    tapLock = false;
+  }, 120);
+}
+
+function shouldIgnoreSyntheticClick() {
+  return Date.now() - touchTriggeredAt < 700;
+}
+
+function bindTap(element, handler) {
+  element.addEventListener(
+    "touchend",
+    event => {
+      event.preventDefault();
+      if (tapLock) return;
+      touchTriggeredAt = Date.now();
+      lockTap();
+      handler(event);
+    },
+    { passive: false }
+  );
+
+  element.addEventListener("click", event => {
+    if (shouldIgnoreSyntheticClick()) {
+      event.preventDefault();
+      return;
+    }
+    if (tapLock) return;
+    lockTap();
+    handler(event);
+  });
+}
+
+function bindDelegatedTap(parent, selector, handler) {
+  parent.addEventListener(
+    "touchend",
+    event => {
+      const target = event.target.closest(selector);
+      if (!target) return;
+      event.preventDefault();
+      if (tapLock) return;
+      touchTriggeredAt = Date.now();
+      lockTap();
+      handler(event, target);
+    },
+    { passive: false }
+  );
+
+  parent.addEventListener("click", event => {
+    const target = event.target.closest(selector);
+    if (!target) return;
+    if (shouldIgnoreSyntheticClick()) {
+      event.preventDefault();
+      return;
+    }
+    if (tapLock) return;
+    lockTap();
+    handler(event, target);
+  });
+}
+
+function onPlay() {
+  showScreen(screenHow);
+}
+
+function onHowStart() {
+  currentIndex = 0;
+  trolleyCount = 0;
+  buildPricePool();
+  renderRound();
+  showScreen(screenRound);
+}
+
+function onPriceTap(event, button) {
+  const index = Number(button.dataset.index);
+  selectPrice(index);
+}
+
+function onRoundAction() {
+  if (btnRoundAction.disabled) return;
+
+  if (phase === "select") {
+    scoreCurrentRound();
+    return;
+  }
+
+  goToNextRound();
+}
+
+function onShare() {
+  shareResult();
 }
 
 async function init() {
@@ -317,13 +345,13 @@ async function init() {
   buildPricePool();
   preloadRoundImages();
 
+  bindTap(btnPlay, onPlay);
+  bindTap(btnHowStart, onHowStart);
+  bindTap(btnRoundAction, onRoundAction);
+  bindTap(btnShare, onShare);
+  bindDelegatedTap(priceGridEl, ".price-button", onPriceTap);
+
   showScreen(screenIntro);
 }
-
-btnPlay.addEventListener("pointerdown", onPlayPress);
-btnHowStart.addEventListener("pointerdown", onHowStartPress);
-priceGridEl.addEventListener("pointerdown", onPriceGridPress);
-btnRoundAction.addEventListener("pointerdown", onRoundActionPress);
-btnShare.addEventListener("pointerdown", onSharePress);
 
 init().catch(console.error);
