@@ -8,7 +8,7 @@
   --bg: #ffffff;
   --text: #111111;
   --muted: #666666;
-  --pill-bg: #d1d1d1;
+  --pill-bg: #d3d3d3;
   --pill-text: #111111;
   --answer-border: #000000;
   --button-bg: #cfcfcf;
@@ -24,6 +24,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -36,19 +38,21 @@ body {
 
 .tk-app {
   width: 100%;
-  max-width: 500px;
-  min-height: 100vh;
+  max-width: 420px;
+  height: 100vh;
   margin: 0 auto;
-  padding: 14px 16px 18px;
+  padding: 6px 10px 8px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .tk-screen {
-  min-height: calc(100vh - 32px);
+  height: calc(100vh - 14px);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* INTRO */
@@ -60,111 +64,101 @@ body {
 .tk-intro-top {
   display: flex;
   justify-content: center;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .tk-intro-logo {
   width: 100%;
-  max-width: 330px;
+  max-width: 255px;
   height: auto;
   object-fit: contain;
 }
 
 .tk-intro-middle {
   text-align: center;
-  margin-top: 2px;
 }
 
 .tk-intro-title {
-  margin: 8px 0 20px;
-  font-size: clamp(1.8rem, 4.6vw, 2.7rem);
-  line-height: 1.14;
+  margin: 2px 0 10px;
+  font-size: clamp(1.35rem, 4.1vw, 2rem);
+  line-height: 1.05;
   font-weight: 300;
   letter-spacing: -0.02em;
 }
 
 .tk-play-button {
   width: 100%;
-  max-width: 210px;
+  max-width: 168px;
   margin: 0 auto;
   display: block;
   border: none;
   border-radius: 999px;
   background: var(--play-bg);
   color: var(--play-text);
-  padding: 15px 22px;
-  font-size: 1.8rem;
+  padding: 11px 16px;
+  font-size: 1.42rem;
   font-weight: 300;
   cursor: pointer;
-  box-shadow: inset 0 -8px 20px rgba(255, 255, 255, 0.06), 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
 .tk-intro-bottom {
   text-align: center;
-  margin-top: 18px;
+  margin-top: 6px;
 }
 
 .tk-date {
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-weight: 700;
 }
 
-.tk-issue {
-  font-size: 0.95rem;
-  margin-top: 4px;
-}
-
+.tk-issue,
 .tk-editor {
-  font-size: 0.95rem;
-  margin-top: 4px;
+  font-size: 0.82rem;
+  margin-top: 1px;
 }
 
-/* HOW TO PLAY */
+/* HOW */
 
 .tk-screen--how {
   justify-content: space-between;
 }
 
 .tk-how-content {
-  padding-top: 12px;
+  padding-top: 0;
 }
 
 .tk-how-title {
-  margin: 0 0 6px;
-  font-size: 2.65rem;
-  line-height: 1;
+  margin: 0 0 3px;
+  font-size: 1.95rem;
+  line-height: 0.95;
   font-weight: 800;
 }
 
 .tk-how-copy {
   margin: 0;
-  font-size: 1.42rem;
-  line-height: 1.34;
+  font-size: 0.98rem;
+  line-height: 1.08;
   font-weight: 300;
 }
 
 .tk-how-example {
-  margin-top: 18px;
+  margin-top: 8px;
 }
 
 .tk-answer-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  min-height: 66px;
-}
-
-.tk-answer-row--example {
-  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
 }
 
 .tk-answer-box {
-  min-width: 148px;
-  min-height: 68px;
-  padding: 8px 22px;
-  border: 5px solid var(--answer-border);
-  border-radius: 28px;
+  min-width: 116px;
+  min-height: 50px;
+  padding: 4px 14px;
+  border: 4px solid var(--answer-border);
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,52 +166,48 @@ body {
 }
 
 .tk-answer-text {
-  font-size: 1.85rem;
+  font-size: 1.38rem;
   line-height: 1;
   font-weight: 700;
 }
 
 .tk-answer-icon {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
-}
-
-.tk-answer-icon-image {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
   object-fit: contain;
 }
 
 .tk-how-product-wrap {
   display: flex;
   justify-content: center;
-  margin-top: 14px;
+  margin-top: 6px;
 }
 
 .tk-how-product-image {
   width: 100%;
-  max-width: 215px;
-  max-height: 235px;
+  max-width: 150px;
+  max-height: 150px;
   object-fit: contain;
 }
 
 .tk-how-product-name {
-  margin-top: 10px;
+  margin-top: 5px;
   text-align: center;
-  font-size: 1.25rem;
-  line-height: 1.15;
+  font-size: 0.92rem;
+  line-height: 1.05;
   font-weight: 700;
 }
 
 .tk-how-product-store {
-  margin-top: 4px;
+  margin-top: 1px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.76rem;
   color: var(--muted);
 }
 
 .tk-how-actions {
-  margin-top: auto;
-  padding-top: 18px;
+  padding-top: 8px;
   display: flex;
   justify-content: flex-end;
 }
@@ -229,56 +219,60 @@ body {
 }
 
 .tk-round-content {
-  padding-top: 4px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .tk-product-wrap {
-  margin-top: 8px;
+  margin-top: 3px;
   display: flex;
   justify-content: center;
   position: relative;
-  min-height: 248px;
+  min-height: 140px;
+  flex: 0 0 auto;
 }
 
 .tk-product-image {
   width: 100%;
-  max-width: 285px;
-  max-height: 285px;
+  max-width: 170px;
+  max-height: 140px;
   object-fit: contain;
 }
 
 .tk-special-badge {
   position: absolute;
-  right: 16px;
-  top: 102px;
-  width: 86px;
+  right: 18px;
+  top: 48px;
+  width: 52px;
   height: auto;
   object-fit: contain;
 }
 
 .tk-product-details {
-  margin-top: 8px;
+  margin-top: 3px;
   text-align: center;
 }
 
 .tk-product-name {
-  font-size: 1.28rem;
-  line-height: 1.12;
-  font-weight: 400;
+  font-size: 0.94rem;
+  line-height: 1.02;
+  font-weight: 500;
 }
 
 .tk-product-store {
-  margin-top: 4px;
-  font-size: 0.95rem;
-  line-height: 1.2;
+  margin-top: 1px;
+  font-size: 0.76rem;
+  line-height: 1.05;
   color: var(--muted);
 }
 
 .tk-price-strip {
-  margin-top: 18px;
+  margin-top: 8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px 14px;
+  gap: 7px 8px;
   align-items: center;
   justify-items: center;
 }
@@ -288,7 +282,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 54px;
+  min-height: 38px;
 }
 
 .tk-price-slot--empty {
@@ -300,26 +294,26 @@ body {
   border-radius: 999px;
   background: var(--pill-bg);
   color: var(--pill-text);
-  min-width: 104px;
-  min-height: 54px;
-  padding: 8px 14px;
-  font-size: 1.08rem;
+  min-width: 82px;
+  min-height: 38px;
+  padding: 5px 8px;
+  font-size: 0.88rem;
   line-height: 1;
   font-weight: 700;
   cursor: pointer;
 }
 
 .tk-price-btn.is-selected {
-  outline: 4px solid #000000;
+  outline: 3px solid #000000;
   outline-offset: 1px;
 }
 
 .tk-bottom-bar {
-  margin-top: 12px;
+  margin-top: 6px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 14px;
+  gap: 8px;
 }
 
 .tk-trolley-wrap,
@@ -329,13 +323,13 @@ body {
 }
 
 .tk-trolley {
-  width: 138px;
+  width: 95px;
   height: auto;
   object-fit: contain;
 }
 
 .tk-trolley--share {
-  width: 220px;
+  width: 160px;
 }
 
 .tk-trolley-count-image {
@@ -343,24 +337,24 @@ body {
   left: 52%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 54px;
+  width: 34px;
   height: auto;
   object-fit: contain;
 }
 
 .tk-trolley-count-image--share {
-  width: 92px;
+  width: 64px;
 }
 
 .tk-action-button {
   border: none;
-  border-radius: 26px;
+  border-radius: 20px;
   background: var(--button-bg);
   color: var(--button-text);
-  min-width: 150px;
-  min-height: 82px;
-  padding: 12px 22px;
-  font-size: 1.8rem;
+  min-width: 110px;
+  min-height: 54px;
+  padding: 8px 12px;
+  font-size: 1.28rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
@@ -375,89 +369,95 @@ body {
 }
 
 .tk-share-date {
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
+}
+
+#btn-share {
+  margin-top: 10px;
+}
+
+button,
+.tk-price-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active,
+.tk-price-btn:active {
+  transform: scale(0.98);
 }
 
 /* IPAD */
 
 @media (min-width: 768px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
   .tk-app {
-    max-width: 760px;
-    padding: 22px 28px 24px;
+    max-width: 700px;
+    height: auto;
+    min-height: 100vh;
+    padding: 16px 22px 18px;
+    overflow: visible;
   }
 
   .tk-screen {
-    min-height: calc(100vh - 46px);
+    height: auto;
+    min-height: calc(100vh - 34px);
+    overflow: visible;
   }
 
   .tk-intro-logo {
-    max-width: 390px;
+    max-width: 340px;
   }
 
   .tk-intro-title {
-    font-size: 3.1rem;
-  }
-
-  .tk-play-button {
-    max-width: 240px;
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .tk-how-title {
-    font-size: 3.2rem;
+    font-size: 2.8rem;
   }
 
   .tk-how-copy {
-    font-size: 1.75rem;
+    font-size: 1.35rem;
   }
 
   .tk-how-product-image {
-    max-width: 260px;
-    max-height: 280px;
+    max-width: 220px;
+    max-height: 220px;
   }
 
   .tk-product-wrap {
-    min-height: 310px;
+    min-height: 250px;
   }
 
   .tk-product-image {
-    max-width: 340px;
-    max-height: 330px;
-  }
-
-  .tk-special-badge {
-    right: 64px;
-    top: 120px;
-    width: 104px;
+    max-width: 280px;
+    max-height: 230px;
   }
 
   .tk-product-name {
-    font-size: 1.7rem;
-  }
-
-  .tk-product-store {
-    font-size: 1.05rem;
+    font-size: 1.4rem;
   }
 
   .tk-price-btn {
-    min-width: 122px;
-    min-height: 60px;
-    font-size: 1.25rem;
+    min-width: 116px;
+    min-height: 54px;
+    font-size: 1.1rem;
   }
 
   .tk-action-button {
-    min-width: 190px;
-    min-height: 92px;
-    font-size: 2.05rem;
+    min-width: 160px;
+    min-height: 78px;
+    font-size: 1.8rem;
   }
 
   .tk-trolley {
-    width: 165px;
-  }
-
-  .tk-trolley--share {
-    width: 250px;
+    width: 140px;
   }
 }

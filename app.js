@@ -44,6 +44,8 @@ const priceStripEl = document.getElementById("price-strip");
 const trolleyCountImageEl = document.getElementById("trolley-count-image");
 const shareTrolleyCountImageEl = document.getElementById("share-trolley-count-image");
 
+const imagePreloadCache = new Set();
+
 function showScreen(screen) {
   [screenIntro, screenHow, screenRound, screenShare].forEach(s => s.classList.add("hidden"));
   screen.classList.remove("hidden");
@@ -63,7 +65,6 @@ function parseBatch(text) {
     const store = (block.match(/STORE:\s*(.+)/) || [, ""])[1].trim();
     const price = parseFloat((block.match(/PRICE:\s*([\d.]+)/) || [, "0"])[1]);
     const image = (block.match(/IMAGE:\s*(.+)/) || [, ""])[1].trim();
-
     return { name, store, price, image };
   });
 }
@@ -79,6 +80,23 @@ function buildPricePool() {
     value,
     usedCorrectly: false
   }));
+}
+
+function preloadImage(src) {
+  if (!src || imagePreloadCache.has(src)) return;
+  const img = new Image();
+  img.decoding = "async";
+  img.src = src;
+  imagePreloadCache.add(src);
+}
+
+function preloadTodaysImages() {
+  todaysProducts.forEach(product => preloadImage(product.image));
+}
+
+function preloadNextImage() {
+  const nextProduct = todaysProducts[currentIndex + 1];
+  if (nextProduct) preloadImage(nextProduct.image);
 }
 
 function updateTrolleyImage(el, count) {
@@ -118,6 +136,7 @@ function renderPriceStrip() {
     }
 
     const button = document.createElement("button");
+    button.type = "button";
     button.className = "tk-price-btn";
     button.textContent = `$${entry.value.toFixed(2)}`;
     button.dataset.index = String(index);
@@ -139,7 +158,6 @@ function renderRound() {
 
   productImageEl.src = product.image;
   productImageEl.alt = product.name;
-
   productNameEl.textContent = product.name;
   productStoreEl.textContent = product.store;
 
@@ -151,17 +169,20 @@ function renderRound() {
 
   updateTrolleyImage(trolleyCountImageEl, trolleyCount);
   renderPriceStrip();
+  preloadNextImage();
 }
 
-function handlePriceClick(event) {
+function selectPrice(index) {
   if (phase !== "select") return;
-
-  const button = event.target.closest(".tk-price-btn");
-  if (!button) return;
-
-  selectedPriceIndex = Number(button.dataset.index);
+  selectedPriceIndex = index;
   answerTextEl.textContent = `$${pricePool[selectedPriceIndex].value.toFixed(2)}`;
   renderPriceStrip();
+}
+
+function handlePriceInteraction(event) {
+  const button = event.target.closest(".tk-price-btn");
+  if (!button) return;
+  selectPrice(Number(button.dataset.index));
 }
 
 function handleRoundAction() {
@@ -171,6 +192,9 @@ function handleRoundAction() {
     const product = todaysProducts[currentIndex];
     const selected = pricePool[selectedPriceIndex];
     const isCorrect = Math.abs(selected.value - product.price) < 0.005;
+
+    phase = "feedback";
+    btnRoundAction.textContent = "NEXT";
 
     if (isCorrect) {
       trolleyCount += 1;
@@ -184,22 +208,18 @@ function handleRoundAction() {
     }
 
     answerIconEl.classList.remove("hidden");
-    phase = "feedback";
-    btnRoundAction.textContent = "NEXT";
     renderPriceStrip();
     return;
   }
 
-  if (phase === "feedback") {
-    currentIndex += 1;
+  currentIndex += 1;
 
-    if (currentIndex >= todaysProducts.length) {
-      showSummary();
-      return;
-    }
-
-    renderRound();
+  if (currentIndex >= todaysProducts.length) {
+    showSummary();
+    return;
   }
+
+  renderRound();
 }
 
 function showSummary() {
@@ -210,8 +230,13 @@ function showSummary() {
 function copyShare() {
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
 
+  if (navigator.share) {
+    navigator.share({ text }).catch(() => {});
+    return;
+  }
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).catch(() => {});
   }
 }
 
@@ -224,6 +249,7 @@ async function init() {
   items = parseBatch(text);
   pickProducts();
   buildPricePool();
+  preloadTodaysImages();
 }
 
 btnPlay.addEventListener("click", () => {
@@ -238,8 +264,14 @@ btnHowStart.addEventListener("click", () => {
   showScreen(screenRound);
 });
 
-priceStripEl.addEventListener("click", handlePriceClick);
-btnRoundAction.addEventListener("click", handleRoundAction);
-btnShare.addEventListener("click", copyShare);
+priceStripEl.addEventListener("click", handlePriceInteraction);
+
+btnRoundAction.addEventListener("click", () => {
+  handleRoundAction();
+});
+
+btnShare.addEventListener("click", () => {
+  copyShare();
+});
 
 init().catch(console.error);
