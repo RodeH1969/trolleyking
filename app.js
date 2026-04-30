@@ -17,6 +17,7 @@ let currentIndex = 0;
 let trolleyCount = 0;
 let selectedPriceIndex = null;
 let phase = "select";
+let inputLocked = false;
 
 const screenIntro = document.getElementById("screen-intro");
 const screenHow = document.getElementById("screen-how");
@@ -105,14 +106,25 @@ function updateTrolleyImage(el, count) {
   }
 }
 
+function setRoundButtonState() {
+  if (phase === "select") {
+    btnRoundAction.textContent = "ENTER";
+    btnRoundAction.disabled = selectedPriceIndex === null;
+  } else {
+    btnRoundAction.textContent = "NEXT";
+    btnRoundAction.disabled = false;
+  }
+}
+
 function resetRoundState() {
   selectedPriceIndex = null;
   phase = "select";
+  inputLocked = false;
   answerTextEl.textContent = "";
   answerIconEl.src = "";
   answerIconEl.alt = "";
   answerIconEl.classList.add("hidden");
-  btnRoundAction.textContent = "ENTER";
+  setRoundButtonState();
 }
 
 function renderPriceGrid() {
@@ -166,27 +178,30 @@ function renderRound() {
 }
 
 function selectPrice(index) {
-  if (phase !== "select") return;
+  if (phase !== "select" || inputLocked) return;
   selectedPriceIndex = index;
   answerTextEl.textContent = `$${pricePool[index].value.toFixed(2)}`;
   renderPriceGrid();
+  setRoundButtonState();
 }
 
-function onPriceGridClick(event) {
+function onPriceGridPointerUp(event) {
   const button = event.target.closest(".price-button");
   if (!button) return;
+  event.preventDefault();
   selectPrice(Number(button.dataset.index));
 }
 
 function scoreCurrentRound() {
-  if (selectedPriceIndex === null) return;
+  if (selectedPriceIndex === null || inputLocked) return;
+
+  inputLocked = true;
 
   const product = todaysProducts[currentIndex];
   const selected = pricePool[selectedPriceIndex];
   const isCorrect = Math.abs(selected.value - product.price) < 0.005;
 
   phase = "feedback";
-  btnRoundAction.textContent = "NEXT";
 
   if (isCorrect) {
     trolleyCount += 1;
@@ -201,24 +216,42 @@ function scoreCurrentRound() {
 
   answerIconEl.classList.remove("hidden");
   renderPriceGrid();
+  setRoundButtonState();
+
+  requestAnimationFrame(() => {
+    inputLocked = false;
+  });
 }
 
 function nextRound() {
+  if (inputLocked) return;
+
+  inputLocked = true;
   currentIndex += 1;
 
   if (currentIndex >= todaysProducts.length) {
     showSummary();
+    inputLocked = false;
     return;
   }
 
   renderRound();
+
+  requestAnimationFrame(() => {
+    inputLocked = false;
+  });
 }
 
-function onRoundAction() {
+function onRoundActionPointerUp(event) {
+  event.preventDefault();
+
+  if (btnRoundAction.disabled || inputLocked) return;
+
   if (phase === "select") {
     scoreCurrentRound();
     return;
   }
+
   nextRound();
 }
 
@@ -227,7 +260,9 @@ function showSummary() {
   showScreen(screenShare);
 }
 
-function onShare() {
+function onSharePointerUp(event) {
+  event.preventDefault();
+
   const text = `TrolleyKing No. 12 — I got ${trolleyCount} out of ${todaysProducts.length} in my trolley on April 29, 2026.`;
 
   if (navigator.share) {
@@ -238,6 +273,20 @@ function onShare() {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch(() => {});
   }
+}
+
+function onPlayPointerUp(event) {
+  event.preventDefault();
+  showScreen(screenHow);
+}
+
+function onHowStartPointerUp(event) {
+  event.preventDefault();
+  currentIndex = 0;
+  trolleyCount = 0;
+  buildPricePool();
+  renderRound();
+  showScreen(screenRound);
 }
 
 async function init() {
@@ -254,20 +303,10 @@ async function init() {
   showScreen(screenIntro);
 }
 
-btnPlay.addEventListener("click", () => {
-  showScreen(screenHow);
-});
-
-btnHowStart.addEventListener("click", () => {
-  currentIndex = 0;
-  trolleyCount = 0;
-  buildPricePool();
-  renderRound();
-  showScreen(screenRound);
-});
-
-priceGridEl.addEventListener("click", onPriceGridClick);
-btnRoundAction.addEventListener("click", onRoundAction);
-btnShare.addEventListener("click", onShare);
+btnPlay.addEventListener("pointerup", onPlayPointerUp);
+btnHowStart.addEventListener("pointerup", onHowStartPointerUp);
+priceGridEl.addEventListener("pointerup", onPriceGridPointerUp);
+btnRoundAction.addEventListener("pointerup", onRoundActionPointerUp);
+btnShare.addEventListener("pointerup", onSharePointerUp);
 
 init().catch(console.error);

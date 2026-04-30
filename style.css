@@ -11,7 +11,9 @@
   --dark: #1f1f24;
   --button-bg: #cfcfcf;
   --pill-bg: #d4d4d4;
+  --pill-selected: #bbbbbb;
   --border: #000000;
+  --disabled: #e6e6e6;
 }
 
 html,
@@ -244,7 +246,7 @@ body {
 }
 
 .price-slot {
-  min-height: 54px;
+  min-height: 56px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,15 +261,16 @@ body {
   border-radius: 999px;
   background: var(--pill-bg);
   color: var(--text);
-  min-width: 102px;
-  min-height: 54px;
-  padding: 8px 14px;
+  min-width: 106px;
+  min-height: 56px;
+  padding: 10px 16px;
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
 }
 
 .price-button.is-selected {
+  background: var(--pill-selected);
   outline: 3px solid #000000;
   outline-offset: 1px;
 }
@@ -315,12 +318,18 @@ body {
   border-radius: 24px;
   background: var(--button-bg);
   color: var(--text);
-  min-width: 150px;
-  min-height: 82px;
+  min-width: 154px;
+  min-height: 86px;
   padding: 12px 20px;
   font-size: 1.9rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+.action-button:disabled {
+  opacity: 0.45;
+  background: var(--disabled);
+  cursor: default;
 }
 
 /* SHARE */
@@ -339,6 +348,20 @@ body {
 
 #btn-share {
   margin-top: 22px;
+}
+
+/* TOUCH */
+
+button,
+.price-button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button:active,
+.price-button:active {
+  transform: scale(0.98);
 }
 
 /* MOBILE TIGHTER */
@@ -413,13 +436,13 @@ body {
   }
 
   .price-slot {
-    min-height: 46px;
+    min-height: 48px;
   }
 
   .price-button {
-    min-width: 88px;
-    min-height: 46px;
-    font-size: 0.92rem;
+    min-width: 92px;
+    min-height: 48px;
+    font-size: 0.94rem;
   }
 
   .trolley-image {
@@ -439,13 +462,11 @@ body {
   }
 
   .action-button {
-    min-width: 124px;
-    min-height: 66px;
+    min-width: 128px;
+    min-height: 68px;
     font-size: 1.55rem;
   }
 }
-
-/* IPAD */
 
 @media (min-width: 768px) {
   .app-shell {
@@ -512,10 +533,4 @@ body {
     min-height: 96px;
     font-size: 2.2rem;
   }
-}
-
-button,
-.price-button {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
 }
