@@ -186,7 +186,8 @@ function selectPrice(index) {
 }
 
 function scoreCurrentRound() {
-  if (selectedPriceIndex === null) return;
+    touchTriggeredAt = 0;
+if (selectedPriceIndex === null) return;
 
   const product = todaysProducts[currentIndex];
   const selected = pricePool[selectedPriceIndex];
@@ -247,7 +248,7 @@ function lockTap() {
 }
 
 function shouldIgnoreSyntheticClick() {
-  return Date.now() - touchTriggeredAt < 700;
+  return Date.now() - touchTriggeredAt < 350;
 }
 
 function bindTap(element, handler) {
